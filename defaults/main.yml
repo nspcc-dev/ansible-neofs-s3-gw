@@ -1,0 +1,17 @@
+---
+
+neofs_s3__svc_name: 'neofs_s3'
+neofs_s3__bin_path: '/usr/local/bin/'
+neofs_s3__conf_dir: '/etc/neofs/s3/'
+neofs_s3__wallet: 's3-wallet.json'
+neofs_s3__wallet_passwd: ''
+
+neofs_s3__neofs_peer: 'node1.local:8080'
+neofs_s3__public_key: ''
+
+neofs_s3__neogo_rpc: 'http://localhost:40332'
+
+neofs_s3__listen_address: '0.0.0.0:8084'
+
+neofs_s3__user: neofs_s3
+neofs_s3__group: neofs_s3
