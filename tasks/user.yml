@@ -1,0 +1,26 @@
+---
+
+- name: Create NeoFS IR group
+  ansible.builtin.group:
+    name: "{{ neofs_s3__group }}"
+    system: yes
+
+- name: Create NeoFS IR user
+  ansible.builtin.user:
+    name: "{{ neofs_s3__user }}"
+    group: "{{ neofs_s3__group }}"
+    password: '*'
+    shell: '/usr/sbin/nologin'
+    home: "{{ neofs_s3__conf_dir }}"
+    system: yes
+    skeleton: no
+
+- name: Get UID for NeoFS IR user
+  ansible.builtin.getent:
+    database: passwd
+    key: "{{ neofs_s3__user }}"
+
+- name: Get GID for NeoFS IR user
+  ansible.builtin.getent:
+    database: group
+    key: "{{ neofs_s3__group }}"
