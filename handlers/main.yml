@@ -1,0 +1,8 @@
+---
+
+- name: Restart NeoFS S3 Gate
+  ansible.builtin.systemd:
+    name: "{{ neofs_s3__svc_name }}.service"
+    state: 'restarted'
+    enabled: yes
+    daemon_reload: yes

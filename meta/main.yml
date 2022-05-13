@@ -1,0 +1,22 @@
+---
+# Copyright (C) 2020 NSPCC <https://nspcc.ru/>
+# SPDX-License-Identifier: GPL-3.0-or-later
+
+galaxy_info:
+  role_name: 'neofs-s3-gateway'
+  namespace: 'nspcc'
+  author: 'NSPCC Operations <ops@nspcc.ru>'
+  description: 'NeoFS S3 Gateway'
+  company: 'NSPCC'
+  license: 'GPL-3.0-or-later'
+  min_ansible_version: '2.10.0'
+
+  platforms:
+    - name: Debian
+      versions:
+        - buster
+  galaxy_tags:
+    - neo
+    - neofs
+    - storage
+dependencies: []
