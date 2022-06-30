@@ -44,15 +44,15 @@
 - name: Copy NeoFS S3 wallet
   ansible.builtin.copy:
     content: "{{ neofs_s3__wallet }}"
-    dest: "{{ neofs_s3__conf_dir }}/s3_wallet.json"
+    dest: "{{ neofs_s3__conf_dir }}/wallet.json"
     owner: "{{ neofs_s3__user }}"
     group: "{{ neofs_s3__group }}"
     mode: '0640'
 
 - name: Copy NeoFS S3 config
   ansible.builtin.template:
-    src: 's3_config.yaml.j2'
-    dest: "{{ neofs_s3__conf_dir }}/s3_config.yaml"
+    src: 'config.yaml.j2'
+    dest: "{{ neofs_s3__conf_dir }}/config.yaml"
     owner: "{{ neofs_s3__user }}"
     group: "{{ neofs_s3__group }}"
     mode: '0640'
