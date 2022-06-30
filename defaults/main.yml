@@ -10,12 +10,93 @@ neofs_s3__auth_bin_url: 'https://github.com/nspcc-dev/neofs-s3-gw/releases/downl
 neofs_s3__svc_name: 'neofs_s3'
 neofs_s3__bin_path: '/usr/local/bin/'
 neofs_s3__conf_dir: '/etc/neofs/s3/'
+
+neofs_s3__loglevel: 'info'
+
+neofs_s3__prometheus_enabled: False
+neofs_s3__pprof_enabled: False
+neofs_s3__listen_address: '0.0.0.0'
+neofs_s3__listen_port: '8084'
+neofs_s3__listen_domains: ''
+
+neofs_s3__tls_cert_file: ''
+neofs_s3__tls_key_file: ''
+
 neofs_s3__wallet: 's3-wallet.json'
+# Account address. If omitted default one will be used.
+neofs_s3__address: ''
 neofs_s3__wallet_passwd: ''
 
-neofs_s3__neofs_peer: 'node1.local:8080'
-neofs_s3__public_key: ''
+# Timeout to connect to a node
+neofs_s3__connect_timeout: ''
+# Timeout to check node health during rebalance
+neofs_s3__healthcheck_timeout: ''
+# Interval to check node health
+neofs_s3__rebalance_interval: ''
 
+# Caching
+neofs_s3__cache_enabled: False
+neofs_s3__cache_objects_lifetime: ''
+neofs_s3__cache_objects_size: ''
+neofs_s3__cache_list_lifetime: ''
+neofs_s3__cache_list_size: ''
+neofs_s3__cache_names_lifetime: ''
+neofs_s3__cache_names_size: ''
+neofs_s3__cache_buckets_lifetime: ''
+neofs_s3__cache_buckets_size: ''
+neofs_s3__cache_system_lifetime: ''
+neofs_s3__cache_system_size: ''
+neofs_s3__cache_accessbox_lifetime: ''
+neofs_s3__cache_accessbox_size: ''
+
+# NATS
+neofs_s3__nats_enabled: False
+neofs_s3__nats_endpoint: nats://localhost:4222
+neofs_s3__nats_timeout: 30s
+neofs_s3__nats_cert_file: ''
+neofs_s3__nats_key_file: ''
+neofs_s3__nats_root_ca: ''
+
+# Default policy of placing containers in NeoFS
+# If a user sends a request `CreateBucket` and doesn't define policy for
+# placing of a container in NeoFS, the S3 Gateway will put the container with
+# default policy.
+neofs_s3__default_policy: ''
+
+# CORS
+neofs_s3__cors_default_max_age: ''
+
+# MaxClients
+# Limits for processing of clients' requests
+neofs_s3__max_clients_count: ''
+# Deadline after which the gate sends error `RequestTimeout` to a client
+neofs_s3__max_clients_deadline: ''
+
+# This makes the gateway use the first node (grpc://s01.neofs.devenv:8080)
+# while it's healthy. Otherwise, gateway uses the second node
+# (grpc://s01.neofs.devenv:8080) for 10% of requests and the third node
+# (grpc://s03.neofs.devenv:8080) for 90% of requests.
+#
+# Until nodes with the same priority level are healthy nodes with other
+# priority are not used.  The lower the value, the higher the priority.
+neofs_s3__peers:
+  - address: node1.neofs:8080
+    priority: 1
+    weight: 1
+  - address: node2.neofs:8080
+    priority: 2
+    weight: 0.1
+  - address: node3.neofs:8080
+    priority: 2
+    weight: 0.9
+
+# NeoGo
+# RPC endpoint and order of resolving of bucket names
 neofs_s3__neogo_rpc: 'http://localhost:40332'
 
-neofs_s3__listen_address: '0.0.0.0:8084'
+# Resolving
+neofs_s3__resolve_order: [ 'nns' ]
+
+neofs_s3__tree_service_enabled: False
+neofs_s3__tree_service_address: localhost
+neofs_s3__tree_service_port: 8080

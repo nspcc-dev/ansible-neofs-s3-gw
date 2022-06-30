@@ -78,6 +78,3 @@
     src: "neofs-s3.service.bin.j2"
     dest: "/etc/systemd/system/{{ neofs_s3__svc_name }}.service"
   notify: [ 'Restart NeoFS S3 Gate' ]
-
-
-
