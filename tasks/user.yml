@@ -1,11 +1,11 @@
 ---
 
-- name: Create NeoFS IR group
+- name: Create NeoFS S3 group
   ansible.builtin.group:
     name: "{{ neofs_s3__group }}"
     system: yes
 
-- name: Create NeoFS IR user
+- name: Create NeoFS S3 user
   ansible.builtin.user:
     name: "{{ neofs_s3__user }}"
     group: "{{ neofs_s3__group }}"
@@ -15,12 +15,12 @@
     system: yes
     skeleton: no
 
-- name: Get UID for NeoFS IR user
+- name: Get UID for NeoFS S3 user
   ansible.builtin.getent:
     database: passwd
     key: "{{ neofs_s3__user }}"
 
-- name: Get GID for NeoFS IR user
+- name: Get GID for NeoFS S3 user
   ansible.builtin.getent:
     database: group
     key: "{{ neofs_s3__group }}"
