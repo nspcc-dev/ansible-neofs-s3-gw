@@ -8,8 +8,8 @@ neofs_s3__gw_bin_url: 'https://github.com/nspcc-dev/neofs-s3-gw/releases/downloa
 neofs_s3__auth_bin_url: 'https://github.com/nspcc-dev/neofs-s3-gw/releases/download/v{{ neofs_s3__version }}/neofs-authmate-linux-amd64'
 
 neofs_s3__svc_name: 'neofs_s3'
-neofs_s3__bin_path: '/usr/local/bin/'
-neofs_s3__conf_dir: '/etc/neofs/s3/'
+neofs_s3__bin_path: '/usr/local/bin'
+neofs_s3__conf_dir: '/etc/neofs/s3'
 
 neofs_s3__loglevel: 'info'
 

@@ -3,7 +3,7 @@
 {{ ansible_managed | comment }}
 
 echo "Authmate issue-secret"
-RESULT=$(AUTHMATE_WALLET_PASSPHRASE="" neofs-s3-authmate issue-secret --wallet s3_wallet.json \
+RESULT=$(AUTHMATE_WALLET_PASSPHRASE="" neofs-s3-authmate issue-secret --wallet wallet.json \
   --peer {{ neofs_s3__neofs_peer }} --gate-public-key {{ neofs_s3__public_key }} \
   --create-session-token --bearer-rules rules.json)
 
