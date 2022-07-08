@@ -1,102 +1,42 @@
 ---
 
-neofs_s3__user: 'neofs_s3'
-neofs_s3__group: 'neofs_s3'
-
 neofs_s3__version: '0.21.1'
 neofs_s3__gw_bin_url: 'https://github.com/nspcc-dev/neofs-s3-gw/releases/download/v{{ neofs_s3__version }}/neofs-s3-gw-linux-amd64'
 neofs_s3__auth_bin_url: 'https://github.com/nspcc-dev/neofs-s3-gw/releases/download/v{{ neofs_s3__version }}/neofs-authmate-linux-amd64'
 
-neofs_s3__svc_name: 'neofs_s3'
-neofs_s3__bin_path: '/usr/local/bin'
+neofs_s3__user: 'neofs-s3'
+neofs_s3__group: 'neofs-s3'
+
 neofs_s3__conf_dir: '/etc/neofs/s3'
+neofs_s3__bin_path: '/usr/bin'
 
-neofs_s3__loglevel: 'info'
+neofs_s3__wallet_content: ''
+neofs_s3__wallet_path: '{{ neofs_s3__conf_dir }}/wallet.json'
 
-neofs_s3__prometheus_enabled: False
-neofs_s3__pprof_enabled: False
-neofs_s3__listen_address: '0.0.0.0'
-neofs_s3__listen_port: '8084'
-neofs_s3__listen_domains: ''
+neofs_s3__s3_address: '0.0.0.0'
+neofs_s3__s3_port: '8084'
 
-neofs_s3__tls_cert_file: ''
-neofs_s3__tls_key_file: ''
+#neofs_s3__prometheus_enabled: False
+#neofs_s3__pprof_enabled: False
 
-neofs_s3__wallet: 's3-wallet.json'
-# Account address. If omitted default one will be used.
-neofs_s3__address: ''
-neofs_s3__wallet_passwd: ''
+neofs_s3__default_config:
+  logger:
+    level: info
+  wallet: '{{ neofs_s3__wallet_path }}'
+  wallet.passphrase: ''
+  listen_address: '{{ neofs_s3__s3_address }}:{{ neofs_s3__s3_port }}'
+  rpc_endpoint: 'http://localhost:40332'
+  peers:
+    0:
+      address: 'localhost:8080'
+      priority: 1
+      weight: 1
 
-# Timeout to connect to a node
-neofs_s3__connect_timeout: ''
-# Timeout to check node health during rebalance
-neofs_s3__healthcheck_timeout: ''
-# Interval to check node health
-neofs_s3__rebalance_interval: ''
+neofs_s3__config: []
+neofs_s3__group_config: []
+neofs_s3__host_config: []
 
-# Caching
-neofs_s3__cache_enabled: False
-neofs_s3__cache_objects_lifetime: ''
-neofs_s3__cache_objects_size: ''
-neofs_s3__cache_list_lifetime: ''
-neofs_s3__cache_list_size: ''
-neofs_s3__cache_names_lifetime: ''
-neofs_s3__cache_names_size: ''
-neofs_s3__cache_buckets_lifetime: ''
-neofs_s3__cache_buckets_size: ''
-neofs_s3__cache_system_lifetime: ''
-neofs_s3__cache_system_size: ''
-neofs_s3__cache_accessbox_lifetime: ''
-neofs_s3__cache_accessbox_size: ''
-
-# NATS
-neofs_s3__nats_enabled: False
-neofs_s3__nats_endpoint: nats://localhost:4222
-neofs_s3__nats_timeout: 30s
-neofs_s3__nats_cert_file: ''
-neofs_s3__nats_key_file: ''
-neofs_s3__nats_root_ca: ''
-
-# Default policy of placing containers in NeoFS
-# If a user sends a request `CreateBucket` and doesn't define policy for
-# placing of a container in NeoFS, the S3 Gateway will put the container with
-# default policy.
-neofs_s3__default_policy: ''
-
-# CORS
-neofs_s3__cors_default_max_age: ''
-
-# MaxClients
-# Limits for processing of clients' requests
-neofs_s3__max_clients_count: ''
-# Deadline after which the gate sends error `RequestTimeout` to a client
-neofs_s3__max_clients_deadline: ''
-
-# This makes the gateway use the first node (grpc://s01.neofs.devenv:8080)
-# while it's healthy. Otherwise, gateway uses the second node
-# (grpc://s01.neofs.devenv:8080) for 10% of requests and the third node
-# (grpc://s03.neofs.devenv:8080) for 90% of requests.
-#
-# Until nodes with the same priority level are healthy nodes with other
-# priority are not used.  The lower the value, the higher the priority.
-neofs_s3__peers:
-  - address: node1.neofs:8080
-    priority: 1
-    weight: 1
-  - address: node2.neofs:8080
-    priority: 2
-    weight: 0.1
-  - address: node3.neofs:8080
-    priority: 2
-    weight: 0.9
-
-# NeoGo
-# RPC endpoint and order of resolving of bucket names
-neofs_s3__neogo_rpc: 'http://localhost:40332'
-
-# Resolving
-neofs_s3__resolve_order: [ 'nns' ]
-
-neofs_s3__tree_service_enabled: False
-neofs_s3__tree_service_address: localhost
-neofs_s3__tree_service_port: 8080
+neofs_s3__combined_config: '{{
+  neofs_s3__config +
+  neofs_s3__group_config +
+  neofs_s3__host_config }}'

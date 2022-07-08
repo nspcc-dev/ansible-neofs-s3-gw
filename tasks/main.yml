@@ -6,75 +6,36 @@
 - name: Create configuration directory parent
   ansible.builtin.file:
     state: directory
-    path: "{{ item | realpath | dirname }}"
+    path: '{{ neofs_s3__conf_dir | realpath | dirname }}'
     owner: 'root'
     group: 'root'
     mode: '0755'
-  with_items:
-    - "{{ neofs_s3__conf_dir }}"
 
 - name: Create configuration directory
   ansible.builtin.file:
     state: directory
-    path: "{{ item }}"
+    path: '{{ neofs_s3__conf_dir }}'
     owner: 'root'
-    group: "{{ neofs_s3__group }}"
+    group: '{{ neofs_s3__group }}'
     mode: '0750'
-  with_items:
-    - "{{ neofs_s3__conf_dir }}"
-
-- name: Install S3 gateway binary 
-  ansible.builtin.get_url:
-    url: "{{ neofs_s3__gw_bin_url }}"
-    dest: "{{ neofs_s3__bin_path }}/neofs-s3-gw" 
-    force: yes
-    owner: 'root'
-    group: 'root'
-    mode: '0755'
-
-- name: Install S3 Authmate binary 
-  ansible.builtin.get_url:
-    url: "{{ neofs_s3__auth_bin_url }}"
-    dest: "{{ neofs_s3__bin_path }}/neofs-s3-authmate" 
-    force: yes
-    owner: 'root'
-    group: 'root'
-    mode: '0755'
-
-- name: Copy NeoFS S3 wallet
-  ansible.builtin.copy:
-    content: "{{ neofs_s3__wallet }}"
-    dest: "{{ neofs_s3__conf_dir }}/wallet.json"
-    owner: 'root'
-    group: "{{ neofs_s3__group }}"
-    mode: '0640'
 
 - name: Copy NeoFS S3 config
   ansible.builtin.template:
     src: 'config.yaml.j2'
-    dest: "{{ neofs_s3__conf_dir }}/config.yaml"
+    dest: '{{ neofs_s3__conf_dir }}/config.yaml'
     owner: 'root'
-    group: "{{ neofs_s3__group }}"
+    group: '{{ neofs_s3__group }}'
     mode: '0640'
+  notify: [ 'Restart NeoFS S3 service' ]
 
-- name: Copy S3 auth pregen
+- ansible.builtin.include_tasks: 'wallet.yml'
+
+- ansible.builtin.include_tasks: 'binary.yml'
+
+- ansible.builtin.include_tasks: 'auth_pregen.yml'
+
+- name: Copy systemd unit
   ansible.builtin.template:
-    src: 'auth_pregen.sh.j2'
-    dest: "{{ neofs_s3__conf_dir }}/auth_pregen.sh"
-    owner: 'root'
-    group: "{{ neofs_s3__group }}"
-    mode: '0750'
-
-- name: Copy S3 auth pregen rules
-  ansible.builtin.copy:
-    content: "{{ lookup('file', '../files/rules.json') }}"
-    dest: "{{ neofs_s3__conf_dir }}/rules.json"
-    owner: 'root'
-    group: "{{ neofs_s3__group }}"
-    mode: '0640'
-
-- name: Copy regular systemd unit
-  ansible.builtin.template:
-    src: "neofs-s3.service.j2"
-    dest: "/etc/systemd/system/{{ neofs_s3__svc_name }}.service"
-  notify: [ 'Restart NeoFS S3 Gate' ]
+    src: 'neofs-s3.service.j2'
+    dest: '/etc/systemd/system/neofs-s3.service'
+  notify: [ 'Restart NeoFS S3 service' ]
