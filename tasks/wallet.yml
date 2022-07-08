@@ -1,0 +1,9 @@
+---
+
+- name: Copy NeoFS S3 wallet
+  ansible.builtin.copy:
+    content: '{{ neofs_s3__wallet_content }}'
+    dest: '{{ neofs_s3__wallet_path }}'
+    owner: 'root'
+    group: '{{ neofs_s3__group }}'
+    mode: '0640'

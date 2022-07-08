@@ -1,107 +1,23 @@
-{{ ansible_managed | comment }}
+{% set cfg = {'result': False} %}
+{% set _ = cfg.__setitem__('result', neofs_s3__default_config) %}
 
-logger:
-  level: {{ neofs_s3__loglevel }}
-
-{% if neofs_s3__prometheus_enabled %}
-metrics: true
-{% endif %}
-
-{% if neofs_s3__pprof_enabled %}
-pprof: true
-{% endif %}
-
-listen_address: {{ neofs_s3__listen_address }}:{{ neofs_s3__listen_port }}
-{% if neofs_s3__tls_cert_file|length > 0 and neofs_s3__tls_key_file|length > 0 %}
-tls:
-  cert_file: {{ neofs_s3__tls_cert_file }}
-  key_file: {{ neofs_s3__tls_key_file }}
-{% endif %}
-
-{% if neofs_s3__listen_domains|length > 0 %}
-listen_domains: {{ neofs_s3__listen_domains }}
-{% endif %}
-
-wallet:
-  passphrase: "{{ neofs_s3__wallet_passwd }}"
-
-{% if neofs_s3__address|length > 0 %}
-address: "{{ neofs_s3__address }}"
-{% endif %}
-
-{% if neofs_s3__connect_timeout|length > 0 %}
-connect_timeout: {{ neofs_s3__connect_timeout }}
-{% endif %}
-{% if neofs_s3__healthcheck_timeout|length > 0 %}
-healthcheck_timeout: {{ neofs_s3__healthcheck_timeout }}
-{% endif %}
-{% if neofs_s3__rebalance_interval|length > 0 %}
-rebalance_interval: {{ neofs_s3__rebalance_interval }}
-{% endif %}
-
-{% if neofs_s3__cache_enabled %}
-cache:
-  objects:
-    lifetime: {{ neofs_s3__cache_objects_lifetime }}
-    size: {{ neofs_s3__cache_objects_size }}
-  list:
-    lifetime: {{ neofs_s3__cache_list_lifetime }}
-    size: {{ neofs_s3__cache_list_size }}
-  names:
-    lifetime: {{ neofs_s3__cache_names_lifetime }}
-    size: {{ neofs_s3__cache_names_size }}
-  buckets:
-    lifetime: {{ neofs_s3__cache_buckets_lifetime }}
-    size: {{ neofs_s3__cache_buckets_size }}
-  system:
-    lifetime: {{ neofs_s3__cache_system_lifetime }}
-    size: {{ neofs_s3__cache_system_size }}
-  accessbox:
-    lifetime: {{ neofs_s3__cache_accessbox_lifetime }}
-    size: {{ neofs_s3__cache_accessbox_size }}
-{% endif %}
-
-{% if neofs_s3__nats_enabled %}
-nats:
-  enabled: true
-  endpoint: {{ neofs_s3__nats_endpoint }}
-  timeout: {{ neofs_s3__nats_timeout }}
-  cert_file: {{ neofs_s3__nats_cert_file }}
-  key_file: {{ neofs_s3__nats_key_file }}
-  root_ca: {{ neofs_s3__nats_root_ca }}
-{% endif %}
-
-rpc_endpoint: {{ neofs_s3__neogo_rpc }}
-
-resolve_order: {{ neofs_s3__resolve_order }}
-
-default_policy: "{{ neofs_s3__default_policy }}"
-
-{% if neofs_s3__cors_default_max_age|length > 0 %}
-cors:
-  default_max_age: {{ neofs_s3__cors_default_max_age }}
-{% endif %}
-
-{% if neofs_s3__max_clients_count|length > 0 %}
-max_clients_count: {{ neofs_s3__max_clients_count }}
-{% endif %}
-{% if neofs_s3__max_clients_deadline|length > 0 %}
-max_clients_deadline: {{ neofs_s3__max_clients_deadline }}
-{% endif %}
-
-peers:
-{% for peer in neofs_s3__peers %}
-  {{ loop.index - 1 }}:
-    address: {{ peer.address }}
-{% if 'priority' in peer %}
-    priority: {{ peer.priority }}
-{% endif %}
-{% if 'weight' in peer %}
-    weight: {{ peer.weight }}
-{% endif %}
+{% for part in neofs_s3__combined_config %}
+{%   if part.replace | d(False) %}
+{%     set o = part.options %}
+{%   else %}
+{%     if 'path' in part %}
+{%       set o = cfg.result[part.path] | combine( part.options, recursive=True, list_merge='append' ) %}
+{%     else %}
+{%       set o = cfg.result | combine( part.options, recursive=True, list_merge='append' ) %}
+{%     endif %}
+{%   endif %}
+{%   if 'path' in part %}
+{%     set _ = cfg.result.__setitem__(part.path, o) %}
+{%   else %}
+{%     set _ = cfg.__setitem__('result', o) %}
+{%   endif %}
 {% endfor %}
 
-{% if neofs_s3__tree_service_enabled %}
-tree:
-  service: {{ neofs_s3__tree_service_address }}:{{ neofs_s3__tree_service_port }}
-{% endif %}
+{{ ansible_managed | comment }}
+
+{{ cfg.result | to_nice_yaml(indent=2) }}
