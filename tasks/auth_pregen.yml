@@ -10,7 +10,7 @@
 
 - name: Copy S3 auth pregen rules
   ansible.builtin.copy:
-    content: "{{ lookup('file', '../files/rules.json') }}"
+    src: 'rules.json'
     dest: '{{ neofs_s3__conf_dir }}/rules.json'
     owner: 'root'
     group: '{{ neofs_s3__group }}'

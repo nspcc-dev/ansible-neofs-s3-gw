@@ -14,12 +14,12 @@ neofs_s3__wallet_content: ''
 neofs_s3__wallet_path: '{{ neofs_s3__conf_dir }}/wallet.json'
 
 neofs_s3__s3_address: '0.0.0.0'
-neofs_s3__s3_port: '8084'
+neofs_s3__s3_port: 8084
 
 #neofs_s3__prometheus_enabled: False
 #neofs_s3__pprof_enabled: False
 
-neofs_s3__default_config:
+neofs_s3__raw_config:
   logger:
     level: info
   wallet: '{{ neofs_s3__wallet_path }}'
@@ -32,11 +32,13 @@ neofs_s3__default_config:
       priority: 1
       weight: 1
 
+neofs_s3__default_config: []
 neofs_s3__config: []
 neofs_s3__group_config: []
 neofs_s3__host_config: []
 
 neofs_s3__combined_config: '{{
+  neofs_s3__default_config +
   neofs_s3__config +
   neofs_s3__group_config +
   neofs_s3__host_config }}'

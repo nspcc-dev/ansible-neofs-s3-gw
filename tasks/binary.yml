@@ -1,6 +1,6 @@
 ---
 
-- name: Install NeoFS S3 GW binary 
+- name: Download NeoFS S3 GW binary 
   ansible.builtin.get_url:
     url: '{{ neofs_s3__gw_bin_url }}'
     dest: '{{ neofs_s3__bin_path }}/neofs-s3-gw' 
@@ -10,7 +10,7 @@
     mode: '0755'
   notify: [ 'Restart NeoFS S3 service' ]
 
-- name: Install S3 Authmate binary 
+- name: Download S3 Authmate binary 
   ansible.builtin.get_url:
     url: '{{ neofs_s3__auth_bin_url }}'
     dest: '{{ neofs_s3__bin_path }}/neofs-s3-authmate' 
