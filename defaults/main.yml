@@ -16,7 +16,7 @@ neofs_s3__wallet_path: '{{ neofs_s3__conf_dir }}/wallet.json'
 neofs_s3__s3_address: '0.0.0.0'
 neofs_s3__s3_port: 8084
 
-#neofs_s3__prometheus_enabled: False
+#neofs_s3__metrics_enabled: False
 #neofs_s3__pprof_enabled: False
 
 neofs_s3__raw_config:
