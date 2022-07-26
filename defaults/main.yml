@@ -1,6 +1,6 @@
 ---
 
-neofs_s3__version: '0.21.1'
+neofs_s3__version: '0.22.0'
 neofs_s3__gw_bin_url: 'https://github.com/nspcc-dev/neofs-s3-gw/releases/download/v{{ neofs_s3__version }}/neofs-s3-gw-linux-amd64'
 neofs_s3__auth_bin_url: 'https://github.com/nspcc-dev/neofs-s3-gw/releases/download/v{{ neofs_s3__version }}/neofs-authmate-linux-amd64'
 
