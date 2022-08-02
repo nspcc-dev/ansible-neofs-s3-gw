@@ -1,6 +1,6 @@
 ---
 
-neofs_s3__version: '0.22.0'
+neofs_s3__version: '0.23.0'
 neofs_s3__gw_bin_url: 'https://github.com/nspcc-dev/neofs-s3-gw/releases/download/v{{ neofs_s3__version }}/neofs-s3-gw-linux-amd64'
 neofs_s3__auth_bin_url: 'https://github.com/nspcc-dev/neofs-s3-gw/releases/download/v{{ neofs_s3__version }}/neofs-s3-authmate-linux-amd64'
 
@@ -16,8 +16,16 @@ neofs_s3__wallet_path: '{{ neofs_s3__conf_dir }}/wallet.json'
 neofs_s3__s3_address: '0.0.0.0'
 neofs_s3__s3_port: 8084
 
-#neofs_s3__metrics_enabled: False
-#neofs_s3__pprof_enabled: False
+neofs_s3__prometheus_enabled: False
+#neofs_s3__prometheus_address: 'localhost'
+#neofs_s3__prometheus_port: 8086
+
+neofs_s3__pprof_enabled: False
+#neofs_s3__pprof_address: 'localhost'
+#neofs_s3__pprof_port: 8085
+
+neofs_s3__pool_error_threshold: 100 # default value
+
 
 neofs_s3__raw_config:
   logger:
@@ -26,13 +34,25 @@ neofs_s3__raw_config:
   wallet.passphrase: ''
   listen_address: '{{ neofs_s3__s3_address }}:{{ neofs_s3__s3_port }}'
   rpc_endpoint: 'http://localhost:40332'
+  pool_error_threshold: '{{ neofs_s3__pool_error_threshold }}' 
   peers:
     0:
       address: 'localhost:8080'
       priority: 1
       weight: 1
 
-neofs_s3__default_config: []
+neofs_s3__default_config: 
+  - enabled: '{{ neofs_s3__pprof_enabled }}'
+    options:
+      pprof:
+        enabled: True
+        address: '{{ neofs_s3__pprof_address }}:{{ neofs_s3__pprof_port }}'
+  - enabled: '{{ neofs_s3__prometheus_enabled }}'
+    options:
+      prometheus:
+        enabled: True
+        address: '{{ neofs_s3__prometheus_address }}:{{ neofs_s3__prometheus_port }}'
+
 neofs_s3__config: []
 neofs_s3__group_config: []
 neofs_s3__host_config: []
