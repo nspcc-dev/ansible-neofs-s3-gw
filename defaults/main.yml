@@ -17,14 +17,14 @@ neofs_s3__s3_address: '0.0.0.0'
 neofs_s3__s3_port: 8084
 
 neofs_s3__prometheus_enabled: False
-#neofs_s3__prometheus_address: 'localhost'
-#neofs_s3__prometheus_port: 8086
+neofs_s3__prometheus_address: 'localhost'
+neofs_s3__prometheus_port: 8086
 
 neofs_s3__pprof_enabled: False
-#neofs_s3__pprof_address: 'localhost'
-#neofs_s3__pprof_port: 8085
+neofs_s3__pprof_address: 'localhost'
+neofs_s3__pprof_port: 8085
 
-neofs_s3__pool_error_threshold: 100 # default value
+neofs_s3__pool_error_threshold: 100
 
 
 neofs_s3__raw_config:
