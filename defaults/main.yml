@@ -62,3 +62,6 @@ neofs_s3__combined_config: '{{
   neofs_s3__config +
   neofs_s3__group_config +
   neofs_s3__host_config }}'
+
+# Flag to skip binaries download
+neofs_s3__binaries_download: True
