@@ -9,6 +9,7 @@
     group: 'root'
     mode: '0755'
   notify: [ 'Restart NeoFS S3 service' ]
+  when: neofs_s3__binaries_downloads | bool
 
 - name: Download S3 Authmate binary 
   ansible.builtin.get_url:
@@ -18,3 +19,4 @@
     owner: 'root'
     group: 'root'
     mode: '0755'
+  when: neofs_s3__binaries_downloads | bool
