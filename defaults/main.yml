@@ -30,8 +30,10 @@ neofs_s3__pool_error_threshold: 100
 neofs_s3__raw_config:
   logger:
     level: info
-  wallet: '{{ neofs_s3__wallet_path }}'
-  wallet.passphrase: ''
+  wallet:
+    path: '{{ neofs_s3__wallet_path }}'
+    passphrase: ''
+    address: ''
   listen_address: '{{ neofs_s3__s3_address }}:{{ neofs_s3__s3_port }}'
   rpc_endpoint: 'http://localhost:40332'
   pool_error_threshold: '{{ neofs_s3__pool_error_threshold }}' 
