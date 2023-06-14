@@ -31,6 +31,7 @@
 - ansible.builtin.include_tasks: wallet.yml
 
 - ansible.builtin.include_tasks: binary.yml
+  when: neofs_s3__binaries_download|bool
 
 - ansible.builtin.include_tasks: auth_pregen.yml
 
