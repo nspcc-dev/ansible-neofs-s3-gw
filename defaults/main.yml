@@ -37,7 +37,7 @@ neofs_s3__raw_config:
     path: '{{ neofs_s3__wallet_path }}'
     passphrase: ''
     address: ''
-  listen_address: '{{ neofs_s3__s3_address }}:{{ neofs_s3__s3_port }}'
+  listen_address: '{{ neofs_s3__s3_address | ansible.utils.ipwrap }}:{{ neofs_s3__s3_port }}'
   rpc_endpoint: 'http://localhost:40332'
   pool_error_threshold: '{{ neofs_s3__pool_error_threshold }}' 
   peers:
@@ -51,12 +51,12 @@ neofs_s3__default_config:
     options:
       pprof:
         enabled: True
-        address: '{{ neofs_s3__pprof_address }}:{{ neofs_s3__pprof_port }}'
+        address: '{{ neofs_s3__pprof_address | ansible.utils.ipwrap }}:{{ neofs_s3__pprof_port }}'
   - enabled: '{{ neofs_s3__prometheus_enabled }}'
     options:
       prometheus:
         enabled: True
-        address: '{{ neofs_s3__prometheus_address }}:{{ neofs_s3__prometheus_port }}'
+        address: '{{ neofs_s3__prometheus_address | ansible.utils.ipwrap }}:{{ neofs_s3__prometheus_port }}'
 
 neofs_s3__config: []
 neofs_s3__group_config: []
