@@ -13,7 +13,7 @@ neofs_s3__bin_path: '/usr/bin'
 neofs_s3__wallet_struct: ''
 neofs_s3__wallet_path: '{{ neofs_s3__conf_dir }}/wallet.json'
 
-neofs_s3__s3_address: '0.0.0.0'
+neofs_s3__s3_address: '::'
 neofs_s3__s3_port: 8084
 
 neofs_s3__prometheus_enabled: False
