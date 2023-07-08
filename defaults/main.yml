@@ -37,7 +37,8 @@ neofs_s3__raw_config:
     path: '{{ neofs_s3__wallet_path }}'
     passphrase: ''
     address: ''
-  listen_address: '{{ neofs_s3__s3_address | ansible.utils.ipwrap }}:{{ neofs_s3__s3_port }}'
+  server:
+    - address: '{{ neofs_s3__s3_address | ansible.utils.ipwrap }}:{{ neofs_s3__s3_port }}'
   rpc_endpoint: 'http://localhost:40332'
   pool_error_threshold: '{{ neofs_s3__pool_error_threshold }}' 
   peers:
