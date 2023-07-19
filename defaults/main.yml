@@ -8,7 +8,8 @@ neofs_s3__user: 'neofs-s3'
 neofs_s3__group: 'neofs-s3'
 
 neofs_s3__conf_dir: '/etc/neofs/s3'
-neofs_s3__bin_path: '/usr/bin'
+neofs_s3__bin_path: '/usr/bin/neofs-s3-gw'
+neofs_s3__auth_bin_path: '/usr/bin/neofs-s3-authmate'
 
 neofs_s3__wallet_struct: ''
 neofs_s3__wallet_path: '{{ neofs_s3__conf_dir }}/wallet.json'

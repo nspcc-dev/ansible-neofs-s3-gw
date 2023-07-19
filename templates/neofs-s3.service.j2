@@ -6,7 +6,7 @@ Requires=network.target
 
 [Service]
 Type=simple
-ExecStart={{ neofs_s3__bin_path }}/neofs-s3-gw --config {{ neofs_s3__conf_dir }}/config.yaml
+ExecStart={{ neofs_s3__bin_path }} --config {{ neofs_s3__conf_dir }}/config.yaml
 User={{ neofs_s3__user }}
 Group={{ neofs_s3__group }}
 WorkingDirectory={{ neofs_s3__conf_dir }}
