@@ -1,7 +1,4 @@
 ---
-# Copyright (C) 2020 NSPCC <https://nspcc.ru/>
-# SPDX-License-Identifier: GPL-3.0-or-later
-
 galaxy_info:
   role_name: 'neofs-s3-gw'
   namespace: 'nspcc'
@@ -13,10 +10,8 @@ galaxy_info:
 
   platforms:
     - name: Debian
-      versions:
-        - buster
+
   galaxy_tags:
     - neo
     - neofs
     - storage
-dependencies: []
